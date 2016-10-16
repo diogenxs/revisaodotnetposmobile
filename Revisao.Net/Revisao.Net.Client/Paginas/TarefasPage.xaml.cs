@@ -1,6 +1,8 @@
-﻿using Revisao.Net.Client.Model;
+﻿using Revisao.Net.Client.Logic;
+using Revisao.Net.Client.Model;
 using System;
 using System.Collections.Generic;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -22,23 +24,29 @@ namespace Revisao.Net.Client.Paginas
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            lista = new List<Tarefa>();
-            for (int i = 0; i < 10; i++)
+            try
             {
-                var t = new Tarefa
-                {
-                    Id = i,
-                    Titulo = "Tarefa Nº " + i,
-                    Descricao = "Descricao da minha tarefa um pouco maior por que eu preciso validar quebra de texto " + i,
-                    Concluido = i % 2 == 0,
-                    DataLimite = DateTime.Now,
-                    Username = ""
-                };
+                var token = MyLocalStorage.GetFromLocalStorage("token");
 
-                lista.Add(t);
+                lista = await TarefasRequestApi.ListarTarefas(token.ToString());
+
+                lstDados.ItemsSource = lista;
             }
+            catch (Exception ex)
+            {
+                var dialog = new MessageDialog(TratarException.ErrorMessage(ex));
 
-            lstDados.ItemsSource = lista;
+                await dialog.ShowAsync();
+            }
+        }
+
+        private void lstDados_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listbox = sender as ListBox;
+
+            var tarefa = listbox.SelectedItem as Tarefa;
+
+            Frame.Navigate(typeof(NovaTarefaPage), tarefa);
         }
     }
 }

@@ -1,1 +1,0 @@
-D:\git\Revisao.Net\Revisao.Net\Revisao.Net.Client\Revisao.Net.Client.csproj;x86

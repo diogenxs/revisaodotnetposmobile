@@ -27,7 +27,7 @@
                     FontSize="36"
                     Click="btnBack_Click" 
                     RelativePanel.RightOf="btnHamburguer"
-                    Visibility="Collapsed"/>
+                    />
             <TextBlock Name="txbTitulo" 
                        FontSize="36"
                        RelativePanel.RightOf="btnBack"
@@ -60,6 +60,7 @@
                     <ListBoxItem Name="lbiTarefas" Tag="Nova Tarefa">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock  
+                                Name="lbiNovaTarefa"
                                 FontFamily="Segoe MDL2 Assets"                    
                                 Text="&#xE109;" 
                                 FontSize="36" />
